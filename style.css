@@ -1,0 +1,58 @@
+* {
+    margin: 0px;
+    padding: 0px;
+}
+body {
+    padding: 5em;
+}
+#prlx_ill {
+    display: block;
+    width: 940px;
+    height: 375px;
+    margin: auto;
+    position: relative;
+    overflow: hidden;
+}
+#prlx_ill * {
+    position: absolute;
+}
+#prlx_ill #err_mess {
+    top: 72px;
+    left: 72px;
+    z-index: 10;
+}
+#prlx_ill #ocatBody {
+    top: 94px;
+    left: 356px;
+    z-index: 9;
+}
+#prlx_ill #spdrBody {
+    top: 150px;
+    left: 432px;
+    z-index: 8;
+}
+#prlx_ill #ocatShad {
+    top: 297px;
+    left: 371px;
+    z-index: 7;
+}
+#prlx_ill #spdrShad {
+    top: 263px;
+    left: 442px;
+    z-index: 6;
+}
+#prlx_ill #bldg_one {
+    top: 73px;
+    left: 457px;
+    z-index: 5;
+}
+#prlx_ill #bldg_two {
+    top: 113px;
+    left: 742px;
+    z-index: 4;
+}
+#prlx_ill #backgrnd {
+    top: -44px;
+    left: 0px;
+    z-index: 1;
+}
