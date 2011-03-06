@@ -1,19 +1,16 @@
 // sanitize the github 404 ... uses jquery anyway
 
-if (typeof console == "undefined")
-    console = {
-        log: $.noop
-    }
+if (typeof console == "undefined") (console = {}).log = $.noop
 
-function gEid(e){
-    return document.getElementById(e)
+var clog = function(){
+    console.log.apply(console,arguments);
 }
 
 var Parallax = {
-    errr: {},
-    ocat: {},
-    spdr: {},
-    bldg: {},
+    err: {},
+    cat: {},
+    car: {},
+    bld: {},
     pct : {},
     cf  : {
         w   : 940,
@@ -22,82 +19,89 @@ var Parallax = {
     },
     init: function () {
         var tmp;
-        this.errr.mess = gEid('err_mess');
-        this.ocat.main = gEid('ocatBody');
-        this.ocat.shad = gEid('ocatShad');
-        this.spdr.main = gEid('spdrBody');
-        this.spdr.shad = gEid('spdrShad');
-        this.bldg._one = gEid('bldg_one');
-        this.bldg._two = gEid('bldg_two');
-        this._parallax = gEid('backgrnd');
-        this._illustra = gEid('prlx_ill');
+        this.err.mess = _gEid('Err_msg');
+        this.cat.main = _gEid('CatBody');
+        this.cat.shad = _gEid('CatShad');
+        this.car.main = _gEid('CarBody');
+        this.car.shad = _gEid('CarShad');
+        this.bld._one = _gEid('Build_1');
+        this.bld._two = _gEid('Build_2');
+        this.backgrnd = _gEid('Backgr0');
+        this.parallax = _gEid('Parallax');
 
-        tmp = this._illustra;
+        tmp = this.parallax;
         tmp.addEventListener('mousedown', function(evt){
-            evt.preventDefault()
+            evt.preventDefault();
         }, false);
+        $(tmp).bind('mousemove', this.move);
 
-        tmp = findPos(tmp);
-        getOrig(this.errr.mess, tmp, [20, 10]);
-        getOrig(this.ocat.main, tmp, [10,  5]);
-        getOrig(this.ocat.shad, tmp, [10, -5]);
-        getOrig(this.spdr.main, tmp, [30, 10]);
-        getOrig(this.spdr.shad, tmp, [30,  0]);
-        getOrig(this.bldg._one, tmp, [50, 20]);
-        getOrig(this.bldg._two, tmp, [75, 30]);
-        getOrig(this._parallax, tmp, [10, 40]);
-        getOrig(this._illustra, tmp, [ 0,  0]);
+        this.cf.off = tmp = _position(tmp);
 
-        $('body').bind('mousemove', this.move);
+        _origins(this.parallax, tmp, [ 0,  0]);
+        _origins(this.err.mess, tmp, [20, 10]);
+        _origins(this.cat.main, tmp, [10,  5]);
+        _origins(this.cat.shad, tmp, [10,  5]);
+        _origins(this.car.main, tmp, [30, 10]);
+        _origins(this.car.shad, tmp, [30,  0]);
+        _origins(this.bld._one, tmp, [50, 20]);
+        _origins(this.bld._two, tmp, [75, 30]);
+        _origins(this.backgrnd, tmp, [10, 40]);
 
-        function getOrig(obj, off, rng) {
-            var tmp = findPos(obj);
-
-            obj.o = {
-                x : tmp.x - off.x,
-                y : tmp.y - off.y
-            };
-            obj.r = {
-                x : rng[0],
-                y : rng[1]
-            };
+        function _origins(obj, off, rng) {
+            try {
+                var tmp = _position(obj);
+                obj.o = {
+                    x : tmp.x - off.x,
+                    y : tmp.y - off.y
+                };
+                obj.r = {
+                    x : rng[0],
+                    y : +rng[1]
+                };
+                clog(tmp.x,tmp.y,'',off.x,off.y,'',obj.o.x,obj.o.y,'',obj.r.x,obj.r.y,obj)
+            } catch (err){
+                clog(err);
+            }
         }
-        function findPos(obj) {
-            var L = 0, T = 0;
-            do {
-                L += obj.offsetLeft;
-                T += obj.offsetTop;
-                console.log(obj);
-            } while ((obj = obj.offsetParent));
-            return {
-                x:L,
-                y:T
+        function _position(obj) {
+            var tmp = {
+                x: 0,
+                y: 0
             };
+            do tmp.x += obj.offsetLeft, tmp.y += obj.offsetTop;
+            while (obj = obj.offsetParent);
+            return tmp;
+        }
+        function _gEid(e){
+            return document.getElementById(e)
         }
     },
     move : function (evt) {  // event handler ... this == element
         var me = Parallax;
         me.calcPct(evt);     // Place items along their range
-        givePos(me.errr.mess);
-        givePos(me.ocat.main);
-        givePos(me.ocat.shad);
-        givePos(me.spdr.main);
-        givePos(me.spdr.shad);
-        givePos(me.bldg._one);
-        givePos(me.bldg._two);
-        givePos(me._parallax);
+        givePos(me.err.mess);
+        givePos(me.cat.main);
+        givePos(me.cat.shad);
+        givePos(me.car.main);
+        givePos(me.car.shad);
+        givePos(me.bld._one);
+        givePos(me.bld._two);
+        givePos(me.backgrnd);
         return true;
 
         function givePos(obj) {
             var tmp = me.cf.unit;
-            obj.style.left = ((obj.o.x - obj.r.x) + (obj.r.x * me.pct.x)) + tmp;
-            obj.style.top  = ((obj.o.y          ) - (obj.r.y * me.pct.y)) + tmp;
+            obj.style.left = ((obj.o.x - obj.r.x/2) + (obj.r.x * me.pct.x)) + tmp;
+            obj.style.top  = ((obj.o.y + obj.r.y/2) - (obj.r.y * me.pct.y)) + tmp;
         }
     },
     calcPct: function (evt){
-        var tmp = this._illustra.o;
-        this.pct.x = .01 * Math.round(((evt.pageX - tmp.x) / this.cf.w) * 100);
-        this.pct.y = .01 * Math.round(((evt.pageY - tmp.y) / this.cf.h) * 100);
+        var tmp = this.parallax.o
+        ,   x = evt.pageX - this.cf.off.x
+        ,   y = evt.pageY - this.cf.off.y;
+        this.pct.x = .01 * Math.round(((x - tmp.x) / this.cf.w) * 100);
+        this.pct.y = .01 * Math.round(((y - tmp.y) / this.cf.h) * 100);
+        clog([x,this.pct.x],[y,this.pct.y]);
     }
 };
 

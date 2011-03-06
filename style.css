@@ -5,7 +5,7 @@
 body {
     padding: 5em;
 }
-#prlx_ill {
+#Parallax {
     display: block;
     width: 940px;
     height: 375px;
@@ -13,46 +13,56 @@ body {
     position: relative;
     overflow: hidden;
 }
-#prlx_ill * {
+#Parallax * {
     position: absolute;
 }
-#prlx_ill #err_mess {
+#Parallax #Err_msg {
     top: 72px;
     left: 72px;
     z-index: 10;
 }
-#prlx_ill #ocatBody {
+#Parallax #CatBody {
     top: 94px;
     left: 356px;
     z-index: 9;
 }
-#prlx_ill #spdrBody {
+#Parallax #CarBody {
     top: 150px;
     left: 432px;
     z-index: 8;
 }
-#prlx_ill #ocatShad {
+#Parallax #CatShad {
     top: 297px;
     left: 371px;
     z-index: 7;
 }
-#prlx_ill #spdrShad {
+#Parallax #CarShad {
     top: 263px;
     left: 442px;
     z-index: 6;
 }
-#prlx_ill #bldg_one {
+#Parallax #Build_1 {
     top: 73px;
     left: 457px;
     z-index: 5;
 }
-#prlx_ill #bldg_two {
+#Parallax #Build_2 {
     top: 113px;
     left: 742px;
     z-index: 4;
 }
-#prlx_ill #backgrnd {
-    top: -44px;
+#Parallax #Backgr0 {
+    top: -55px;
     left: 0px;
     z-index: 1;
+}
+.note {
+    display: none;
+    font: normal 8pt/9pt Helvetica;
+    padding: .3em .6em;
+    position: absolute;
+    background-color: #ffc;
+    z-index: 9999;
+    -webkit-box-shadow: 1px 2px 3px #444;
+    -moz-box-shadow: 1px 2px 3px #444;
 }
