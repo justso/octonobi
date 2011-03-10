@@ -11,23 +11,32 @@ var Parallax = {
     cat: {},
     car: {},
     bld: {},
-    pct : {},
-    cf  : {
+    pct: {},
+    cf : {
         w   : 940,
         h   : 375,
-        unit: 'px'
+        facX: 2,
+        facY: 1,
+        facZ: 5,
+        radi: 4,
+        unit:'px',
+        para: 4
     },
     init: function () {
-        var tmp;
-        this.err.mess = _gEid('Err_msg');
-        this.cat.main = _gEid('CatBody');
-        this.cat.shad = _gEid('CatShad');
-        this.car.main = _gEid('CarBody');
-        this.car.shad = _gEid('CarShad');
+        var tmp
+        ,   cf = this.cf;
+
+        this.parallax = _gEid('Parallax');
+        this.backgrnd = _gEid('Backgr0');
         this.bld._one = _gEid('Build_1');
         this.bld._two = _gEid('Build_2');
-        this.backgrnd = _gEid('Backgr0');
-        this.parallax = _gEid('Parallax');
+
+        this.car.shad = _gEid('CarShad');
+        this.car.body = _gEid('CarBody');
+        this.cat.shad = _gEid('CatShad');
+        this.cat.body = _gEid('CatBody');
+
+        this.err.mess = _gEid('Err_msg');
 
         tmp = this.parallax;
         tmp.addEventListener('mousedown', function(evt){
@@ -35,17 +44,19 @@ var Parallax = {
         }, false);
         $(tmp).bind('mousemove', this.move);
 
-        this.cf.off = tmp = _position(tmp);
+        cf.off = tmp = _position(tmp);
 
-        _origins(this.parallax, tmp, [ 0,  0]);
-        _origins(this.err.mess, tmp, [20, 10]);
-        _origins(this.cat.main, tmp, [10,  5]);
-        _origins(this.cat.shad, tmp, [10,  5]);
-        _origins(this.car.main, tmp, [30, 10]);
-        _origins(this.car.shad, tmp, [30,  0]);
-        _origins(this.bld._one, tmp, [50, 20]);
-        _origins(this.bld._two, tmp, [75, 30]);
-        _origins(this.backgrnd, tmp, [10, 40]);
+        _origins(this.parallax, tmp, [7, 0]);
+        _origins(this.backgrnd, tmp, [7, 8]);
+        _origins(this.bld._one, tmp, [15,4]);
+        _origins(this.bld._two, tmp, [25,8]);
+
+        _origins(this.car.shad, tmp, [11, 0]);
+        _origins(this.car.body, tmp, [9, -1]);
+        _origins(this.cat.shad, tmp, [0, -1]);
+        _origins(this.cat.body, tmp, [1, -2]);
+
+        _origins(this.err.mess, tmp, [4, -1]);
 
         function _origins(obj, off, rng) {
             try {
@@ -55,10 +66,10 @@ var Parallax = {
                     y : tmp.y - off.y
                 };
                 obj.r = {
-                    x : rng[0],
-                    y : +rng[1]
+                    x : (rng[0] - cf.para) * cf.facZ * cf.facX,
+                    y : (cf.para - rng[1]) * cf.facZ * cf.facY
                 };
-                clog(tmp.x,tmp.y,'',off.x,off.y,'',obj.o.x,obj.o.y,'',obj.r.x,obj.r.y,obj)
+                clog('tmp',tmp.x,tmp.y,'off',off.x,off.y,'objo',obj.o.x,obj.o.y,'objr',obj.r.x,obj.r.y,obj)
             } catch (err){
                 clog(err);
             }
@@ -79,14 +90,14 @@ var Parallax = {
     move : function (evt) {  // event handler ... this == element
         var me = Parallax;
         me.calcPct(evt);     // Place items along their range
-        givePos(me.err.mess);
-        givePos(me.cat.main);
-        givePos(me.cat.shad);
-        givePos(me.car.main);
-        givePos(me.car.shad);
+        givePos(me.backgrnd);
         givePos(me.bld._one);
         givePos(me.bld._two);
-        givePos(me.backgrnd);
+        givePos(me.car.shad);
+        givePos(me.car.body);
+        givePos(me.cat.shad);
+        givePos(me.cat.body);
+        givePos(me.err.mess);
         return true;
 
         function givePos(obj) {

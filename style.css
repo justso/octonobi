@@ -3,11 +3,11 @@
     padding: 0px;
 }
 body {
-    padding: 5em;
+    padding: 2em 5em;
 }
 #Parallax {
     display: block;
-    width: 940px;
+    width: 850px;
     height: 375px;
     margin: auto;
     position: relative;
@@ -16,46 +16,50 @@ body {
 #Parallax * {
     position: absolute;
 }
-#Parallax #Err_msg {
-    top: 72px;
-    left: 72px;
-    z-index: 10;
-}
-#Parallax #CatBody {
-    top: 94px;
-    left: 356px;
-    z-index: 9;
-}
-#Parallax #CarBody {
-    top: 150px;
-    left: 432px;
-    z-index: 8;
-}
-#Parallax #CatShad {
-    top: 297px;
-    left: 371px;
-    z-index: 7;
-}
-#Parallax #CarShad {
-    top: 263px;
-    left: 442px;
-    z-index: 6;
-}
-#Parallax #Build_1 {
-    top: 73px;
-    left: 457px;
-    z-index: 5;
-}
-#Parallax #Build_2 {
-    top: 113px;
-    left: 742px;
-    z-index: 4;
-}
-#Parallax #Backgr0 {
+#Backgr0 {
     top: -55px;
-    left: 0px;
+    left: -55px;
     z-index: 1;
 }
+#Build_1 {
+    top: 73px;
+    left: 517px;
+    z-index: 5;
+}
+#Build_2 {
+    top: 113px;
+    left: 812px;
+    z-index: 4;
+}
+#CarShad {
+    top: 263px;
+    left: 372px;
+    z-index: 6;
+}
+#CarBody {
+    top: 150px;
+    left: 362px;
+    z-index: 8;
+}
+#CatShad {
+    top: 317px;
+    left: 321px;
+    z-index: 7;
+}
+#CatBody {
+    top: 114px;
+    left: 306px;
+    z-index: 9;
+}
+#Err_msg {
+    top: 92px;
+    left: 24px;
+    z-index: 10;
+}
+/*
+
+
+*/
 .note {
     display: none;
     font: normal 8pt/9pt Helvetica;
@@ -66,3 +70,13 @@ body {
     -webkit-box-shadow: 1px 2px 3px #444;
     -moz-box-shadow: 1px 2px 3px #444;
 }
+label.control {
+    float: left;
+}
+.control {
+    margin: 2em;
+}
+br {
+    clear: both;
+}
+
